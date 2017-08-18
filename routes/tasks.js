@@ -7,7 +7,7 @@ let tasks = [{"id": 0, "title": "Eve git."}, {"id": 1, "title": "React yaz."}, {
 router.get('/', (req, res) => {
     setTimeout(() => {
         res.json({"error": false, "data": tasks});
-    }, 3000);
+    }, 1500);
 });
 
 router.get('/:id', (req, res) => {
@@ -35,7 +35,10 @@ router.put('/:id', (req, res) => {
 router.post('/', (req, res) => {
     let task = {id: parseInt(tasks[tasks.length - 1].id) + 1, title: req.body.title};
     tasks.push(task);
-    res.json({"error": false, "data": tasks});
+    setTimeout(() => {
+        res.json({"error": false, "data": tasks});
+    }, 1500);
+
 })
 
 export default router;
