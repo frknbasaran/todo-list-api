@@ -5,7 +5,9 @@ const router = express.Router();
 let tasks = [{"id": 0, "title": "Eve git."}, {"id": 1, "title": "React yaz."}, {"id": 2, "title": "CS oyna."}];
 
 router.get('/', (req, res) => {
-    return res.json({"error": false, "data": tasks});
+    setTimeout(() => {
+        res.json({"error": false, "data": tasks});
+    }, 3000);
 });
 
 router.get('/:id', (req, res) => {
@@ -31,9 +33,9 @@ router.put('/:id', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    let task = {id: req.body.id, title: req.body.title};
+    let task = {id: parseInt(tasks[tasks.length - 1].id) + 1, title: req.body.title};
     tasks.push(task);
-    res.json(tasks);
+    res.json({"error": false, "data": tasks});
 })
 
 export default router;
