@@ -1,13 +1,13 @@
-var express = require('express');
-var bodyParser = require('body-parser');
+import express from 'express';
+import bodyParser from 'body-parser';
 
-var tasks = require('./routes/tasks');
+import tasks from './routes/tasks';
 
-var app = express();
+const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/tasks', tasks);
 
-module.exports = app;
+app.listen(80);

@@ -1,34 +1,39 @@
-var express = require('express');
-var router = express.Router();
+import express from 'express';
 
-const tasks = [{"id":0,"title":"Eve git."},{"id":1,"title":"React yaz."},{"id":2,"title":"CS oyna."}];
+const router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res) {
-  return res.json(res.json({"error":false,"data":tasks}));
+let tasks = [{"id": 0, "title": "Eve git."}, {"id": 1, "title": "React yaz."}, {"id": 2, "title": "CS oyna."}];
+
+router.get('/', (req, res) => {
+    return res.json({"error": false, "data": tasks});
 });
 
-/* GET home page. */
-router.get('/:id', function(req, res) {
+router.get('/:id', (req, res) => {
     if (tasks.indexOf(tasks[req.params.id]) !== -1) {
-        res.json({"error":false,"data":tasks[req.params.id]});
+        res.json({"error": false, "data": tasks[req.params.id]});
     } else {
-        res.json({"error":true,"data":{"message":"No found task."}});
+        res.json({"error": true, "data": {"message": "No found task."}});
     }
-
 });
 
-/* GET home page. */
-router.put('/:id', function(req, res) {
-    let task = tasks.find(task => task.id === req.params.id);
-    tasks[tasks.indexOf(task)].title = req.body.title;
-    res.json(tasks[tasks.indexOf(task)]);
+router.delete('/:id', (req, res) => {
+    var modifiedTasksList = tasks.filter(task => parseInt(task.id) !== parseInt(req.params.id));
+
+    tasks = modifiedTasksList;
+    res.json({"error": false, "data": modifiedTasksList});
+})
+
+router.put('/:id', (req, res) => {
+    if (tasks.indexOf(tasks[req.params.id]) !== -1) {
+        tasks[req.params.id].title = req.body.title;
+        res.json({"error": false, "data": tasks[req.params.id]});
+    } else res.json({"error": true, "data": {"message": "Not found data."}});
 });
 
-router.post('/', function (req, res) {
-    let task = {id:req.body.id, title:req.body.title};
+router.post('/', (req, res) => {
+    let task = {id: req.body.id, title: req.body.title};
     tasks.push(task);
     res.json(tasks);
 })
 
-module.exports = router;
+export default router;
